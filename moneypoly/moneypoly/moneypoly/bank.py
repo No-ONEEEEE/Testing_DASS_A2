@@ -5,6 +5,7 @@ from moneypoly.config import BANK_STARTING_FUNDS
 
 class Bank:
     """Represents the central bank handling money flows in the game."""
+
     def __init__(self):
         self._funds = BANK_STARTING_FUNDS
         self._loans_issued = []
@@ -46,11 +47,14 @@ class Bank:
         """
         if amount <= 0:
             return
-        paid = self.pay_out(amount)
-        player.add_money(paid)
-        if paid > 0:
-            self._loans_issued.append((player.name, paid))
-            print(f"  Bank issued a ${paid} emergency loan to {player.name}.")
+        if amount > self._funds:
+            raise ValueError(
+                f"Bank cannot loan ${amount}; only ${self._funds} available."
+            )
+        player.add_money(amount)
+        self._funds -= amount
+        self._loans_issued.append((player.name, amount))
+        print(f"  Bank issued a ${amount} emergency loan to {player.name}.")
 
     def total_loans_issued(self):
         """Return the cumulative value of all loans the bank has issued."""

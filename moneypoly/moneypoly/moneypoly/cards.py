@@ -2,145 +2,167 @@
 
 import random
 
+
 CHANCE_CARDS = [
     {
-        "description": "Advance to Go. Collect $200.",
-        "action": "move_to",
-        "value": 0,
+        "message": "Advance to Go (Collect $200)",
+        "effect": lambda player, bank, board: player.move(0, board),
     },
     {
-        "description": "Bank pays you a dividend of $50.",
-        "action": "collect",
-        "value": 50,
+        "message": "Bank error in your favor – Collect $200",
+        "effect": lambda player, bank, board: bank.give_loan(player, 200),
     },
     {
-        "description": "Go to Jail. Go directly to Jail.",
-        "action": "jail",
-        "value": 0,
+        "message": "Doctor's fees – Pay $50",
+        "effect": lambda player, bank, board: bank.collect(player, 50),
     },
     {
-        "description": "Pay a poor tax of $15.",
-        "action": "pay",
-        "value": 15,
+        "message": "Get Out of Jail Free – This card may be kept until needed, or sold",
+        "effect": lambda player, bank, board: player.get_out_of_jail_free_cards.append(
+            "Chance"
+        ),
     },
     {
-        "description": "You have won a crossword competition. Collect $100.",
-        "action": "collect",
-        "value": 100,
+        "message": "Go to Jail – Go directly to Jail, do not pass Go, do not collect $200",
+        "effect": lambda player, bank, board: player.go_to_jail(board),
     },
     {
-        "description": "Your building and loan matures. Collect $150.",
-        "action": "collect",
-        "value": 150,
+        "message": "It is your birthday – Collect $10 from every player",
+        "effect": lambda player, bank, board: [
+            bank.transfer_money(p, player, 10) for p in board.players if p != player
+        ],
     },
     {
-        "description": "Pay school fees of $150.",
-        "action": "pay",
-        "value": 150,
+        "message": "Grand Opera Night – Collect $50 from every player for opening night seats",
+        "effect": lambda player, bank, board: [
+            bank.transfer_money(p, player, 50) for p in board.players if p != player
+        ],
     },
     {
-        "description": "Advance to Boardwalk.",
-        "action": "move_to",
-        "value": 39,
+        "message": "Income Tax refund – Collect $20",
+        "effect": lambda player, bank, board: bank.give_loan(player, 20),
     },
     {
-        "description": "Get Out of Jail Free. Keep until needed.",
-        "action": "jail_free",
-        "value": 0,
+        "message": "Life Insurance Matures – Collect $100",
+        "effect": lambda player, bank, board: bank.give_loan(player, 100),
     },
     {
-        "description": "Speeding fine — pay $15.",
-        "action": "pay",
-        "value": 15,
+        "message": "Pay Hospital Fees of $100",
+        "effect": lambda player, bank, board: bank.collect(player, 100),
     },
     {
-        "description": "You are assessed for street repairs. Pay $40.",
-        "action": "pay",
-        "value": 40,
+        "message": "Pay School Fees of $50",
+        "effect": lambda player, bank, board: bank.collect(player, 50),
     },
     {
-        "description": "Collect $50 from every other player.",
-        "action": "collect_from_all",
-        "value": 50,
+        "message": "Receive $25 Consultancy Fee",
+        "effect": lambda player, bank, board: bank.give_loan(player, 25),
+    },
+    {
+        "message": "You are assessed for street repairs – $40 per house, $115 per hotel",
+        "effect": lambda player, bank, board: bank.collect(
+            player, 40 * player.houses + 115 * player.hotels
+        ),
+    },
+    {
+        "message": "You have won second prize in a beauty contest – Collect $10",
+        "effect": lambda player, bank, board: bank.give_loan(player, 10),
+    },
+    {
+        "message": "You inherit $100",
+        "effect": lambda player, bank, board: bank.give_loan(player, 100),
+    },
+    {
+        "message": "From sale of stock you get $50",
+        "effect": lambda player, bank, board: bank.give_loan(player, 50),
     },
 ]
 
 COMMUNITY_CHEST_CARDS = [
     {
-        "description": "Bank error in your favour. Collect $200.",
-        "action": "collect",
-        "value": 200,
+        "message": "Advance to Go (Collect $200)",
+        "effect": lambda player, bank, board: player.move(0, board),
     },
     {
-        "description": "Doctor's fees. Pay $50.",
-        "action": "pay",
-        "value": 50,
+        "message": "Bank error in your favor – Collect $200",
+        "effect": lambda player, bank, board: bank.give_loan(player, 200),
     },
     {
-        "description": "From sale of stock you get $50.",
-        "action": "collect",
-        "value": 50,
+        "message": "Doctor's fees – Pay $50",
+        "effect": lambda player, bank, board: bank.collect(player, 50),
     },
     {
-        "description": "Go to Jail.",
-        "action": "jail",
-        "value": 0,
+        "message": "Get Out of Jail Free – This card may be kept until needed, or sold",
+        "effect": lambda player, bank, board: player.get_out_of_jail_free_cards.append(
+            "Community Chest"
+        ),
     },
     {
-        "description": "Holiday fund matures. Receive $100.",
-        "action": "collect",
-        "value": 100,
+        "message": "Go to Jail – Go directly to Jail, do not pass Go, do not collect $200",
+        "effect": lambda player, bank, board: player.go_to_jail(board),
     },
     {
-        "description": "Income tax refund. Collect $20.",
-        "action": "collect",
-        "value": 20,
+        "message": "It is your birthday – Collect $10 from every player",
+        "effect": lambda player, bank, board: [
+            bank.transfer_money(p, player, 10) for p in board.players if p != player
+        ],
     },
     {
-        "description": "It is your birthday. Collect $10 from every player.",
-        "action": "birthday",
-        "value": 10,
+        "message": "Grand Opera Night – Collect $50 from every player for opening night seats",
+        "effect": lambda player, bank, board: [
+            bank.transfer_money(p, player, 50) for p in board.players if p != player
+        ],
     },
     {
-        "description": "Life insurance matures. Collect $100.",
-        "action": "collect",
-        "value": 100,
+        "message": "Income Tax refund – Collect $20",
+        "effect": lambda player, bank, board: bank.give_loan(player, 20),
     },
     {
-        "description": "Pay hospital fees of $100.",
-        "action": "pay",
-        "value": 100,
+        "message": "Life Insurance Matures – Collect $100",
+        "effect": lambda player, bank, board: bank.give_loan(player, 100),
     },
     {
-        "description": "Pay school fees of $50.",
-        "action": "pay",
-        "value": 50,
+        "message": "Pay Hospital Fees of $100",
+        "effect": lambda player, bank, board: bank.collect(player, 100),
     },
     {
-        "description": "Receive $25 consultancy fee.",
-        "action": "collect",
-        "value": 25,
+        "message": "Pay School Fees of $50",
+        "effect": lambda player, bank, board: bank.collect(player, 50),
     },
     {
-        "description": "Get Out of Jail Free.",
-        "action": "jail_free",
-        "value": 0,
+        "message": "Receive $25 Consultancy Fee",
+        "effect": lambda player, bank, board: bank.give_loan(player, 25),
+    },
+    {
+        "message": "You are assessed for street repairs – $40 per house, $115 per hotel",
+        "effect": lambda player, bank, board: bank.collect(
+            player, 40 * player.houses + 115 * player.hotels
+        ),
+    },
+    {
+        "message": "You have won second prize in a beauty contest – Collect $10",
+        "effect": lambda player, bank, board: bank.give_loan(player, 10),
+    },
+    {
+        "message": "You inherit $100",
+        "effect": lambda player, bank, board: bank.give_loan(player, 100),
+    },
+    {
+        "message": "From sale of stock you get $50",
+        "effect": lambda player, bank, board: bank.give_loan(player, 50),
     },
 ]
 
 
 class CardDeck:
-    """Represents an ordered deck of Chance or Community Chest cards."""
+    """Simple deck wrapper for Chance and Community Chest cards."""
 
     def __init__(self, cards):
         self.cards = list(cards)
         self.index = 0
 
     def draw(self):
-        """
-        Draw the next card from the deck, cycling back to the start
-        when the deck is exhausted. Returns the card dict.
-        """
+        """Draw the next card, cycling back to the start when exhausted."""
         if not self.cards:
             return None
         card = self.cards[self.index % len(self.cards)]
@@ -167,3 +189,4 @@ class CardDeck:
 
     def __repr__(self):
         return f"CardDeck({len(self.cards)} cards, next={self.index % len(self.cards)})"
+

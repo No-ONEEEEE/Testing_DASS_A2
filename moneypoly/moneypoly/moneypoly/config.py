@@ -1,4 +1,4 @@
-"""Configuration constants controlling MoneyPoly board positions and money."""
+"""Game configuration constants for MoneyPoly (money, positions, limits)."""
 
 STARTING_BALANCE = 1500
 GO_SALARY = 200

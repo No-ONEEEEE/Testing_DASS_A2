@@ -1,4 +1,4 @@
-"""Dice utilities for rolling and tracking consecutive doubles in MoneyPoly."""
+"""Dice utilities used to drive player movement in MoneyPoly."""
 
 import random
 
