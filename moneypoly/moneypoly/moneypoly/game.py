@@ -231,7 +231,9 @@ class Game:
                 continue
             min_required = highest_bid + AUCTION_MIN_INCREMENT
             if bid < min_required:
-                print(f"  Bid too low — minimum raise is ${AUCTION_MIN_INCREMENT}.")
+                print(
+                    f"  Bid too low — minimum raise is ${AUCTION_MIN_INCREMENT}."
+                )
                 continue
             if bid > player.balance:
                 print(f"  {player.name} cannot afford ${bid}.")
@@ -381,8 +383,7 @@ class Game:
         if winner:
             ui.print_banner("GAME OVER")
             print(
-                "\n  %s wins with a net worth of $%d!\n"
-                % (winner.name, winner.net_worth())
+                f"\n  {winner.name} wins with a net worth of ${winner.net_worth()}!\n"
             )
         else:
             print("\n  The game ended with no players remaining.")
