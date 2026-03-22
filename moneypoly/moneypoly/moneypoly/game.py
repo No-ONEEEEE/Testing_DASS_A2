@@ -279,21 +279,21 @@ class Game:
             roll = self.dice.roll()
             print(f"  {player.name} rolled: {self.dice.describe()}")
             self._move_and_resolve(player, roll)
-            return
-
-        # No action
-        # Serve the turn
-        player.jail_turns += 1
-        if player.jail_turns >= 3:
-            # Mandatory release after 3 turns
-            print(f"  {player.name} must leave jail. Paying mandatory ${JAIL_FINE} fine.")
-            player.deduct_money(JAIL_FINE)
-            self.bank.collect(JAIL_FINE)
-            player.in_jail = False
-            player.jail_turns = 0
-            roll = self.dice.roll()
-            print(f"  {player.name} rolled: {self.dice.describe()}")
-            self._move_and_resolve(player, roll)
+        else:
+            # No action – serve the turn
+            player.jail_turns += 1
+            if player.jail_turns >= 3:
+                # Mandatory release after 3 turns
+                print(
+                    f"  {player.name} must leave jail. Paying mandatory ${JAIL_FINE} fine."
+                )
+                player.deduct_money(JAIL_FINE)
+                self.bank.collect(JAIL_FINE)
+                player.in_jail = False
+                player.jail_turns = 0
+                roll = self.dice.roll()
+                print(f"  {player.name} rolled: {self.dice.describe()}")
+                self._move_and_resolve(player, roll)
 
     def _apply_card(self, player, card):
         """Apply the effect of a drawn Chance or Community Chest card."""
