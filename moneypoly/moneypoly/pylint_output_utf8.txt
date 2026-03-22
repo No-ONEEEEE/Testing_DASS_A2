@@ -1,0 +1,27 @@
+﻿************* Module bank
+moneypoly\bank.py:3:0: E0401: Unable to import 'moneypoly.config' (import-error)
+************* Module board
+moneypoly\board.py:3:0: E0401: Unable to import 'moneypoly.property' (import-error)
+moneypoly\board.py:4:0: E0401: Unable to import 'moneypoly.config' (import-error)
+************* Module game
+moneypoly\game.py:484:0: C0305: Trailing newlines (trailing-newlines)
+moneypoly\game.py:3:0: E0401: Unable to import 'moneypoly.config' (import-error)
+moneypoly\game.py:11:0: E0401: Unable to import 'moneypoly.player' (import-error)
+moneypoly\game.py:12:0: E0401: Unable to import 'moneypoly.board' (import-error)
+moneypoly\game.py:13:0: E0401: Unable to import 'moneypoly.bank' (import-error)
+moneypoly\game.py:14:0: E0401: Unable to import 'moneypoly.dice' (import-error)
+moneypoly\game.py:15:0: E0401: Unable to import 'moneypoly.cards' (import-error)
+moneypoly\game.py:16:0: E0401: Unable to import 'moneypoly' (import-error)
+moneypoly\game.py:19:0: R0902: Too many instance attributes (9/7) (too-many-instance-attributes)
+moneypoly\game.py:297:4: R0912: Too many branches (15/12) (too-many-branches)
+************* Module player
+moneypoly\player.py:3:0: E0401: Unable to import 'moneypoly.config' (import-error)
+moneypoly\player.py:6:0: R0902: Too many instance attributes (8/7) (too-many-instance-attributes)
+************* Module property
+moneypoly\property.py:4:0: R0902: Too many instance attributes (9/7) (too-many-instance-attributes)
+moneypoly\property.py:9:4: R0913: Too many arguments (6/5) (too-many-arguments)
+moneypoly\property.py:9:4: R0917: Too many positional arguments (6/5) (too-many-positional-arguments)
+
+------------------------------------------------------------------
+Your code has been rated at 9.03/10 (previous run: 9.03/10, +0.00)
+

@@ -1,0 +1,25 @@
+﻿************* Module bank
+moneypoly\bank.py:3:0: E0401: Unable to import 'moneypoly.config' (import-error)
+************* Module board
+moneypoly\board.py:3:0: E0401: Unable to import 'moneypoly.property' (import-error)
+moneypoly\board.py:4:0: E0401: Unable to import 'moneypoly.config' (import-error)
+************* Module game
+moneypoly\game.py:3:0: E0401: Unable to import 'moneypoly.config' (import-error)
+moneypoly\game.py:11:0: E0401: Unable to import 'moneypoly.player' (import-error)
+moneypoly\game.py:12:0: E0401: Unable to import 'moneypoly.board' (import-error)
+moneypoly\game.py:13:0: E0401: Unable to import 'moneypoly.bank' (import-error)
+moneypoly\game.py:14:0: E0401: Unable to import 'moneypoly.dice' (import-error)
+moneypoly\game.py:15:0: E0401: Unable to import 'moneypoly.cards' (import-error)
+moneypoly\game.py:16:0: E0401: Unable to import 'moneypoly' (import-error)
+moneypoly\game.py:19:0: R0902: Too many instance attributes (8/7) (too-many-instance-attributes)
+************* Module player
+moneypoly\player.py:132:0: C0305: Trailing newlines (trailing-newlines)
+moneypoly\player.py:5:0: E0401: Unable to import 'moneypoly.config' (import-error)
+moneypoly\player.py:17:0: R0902: Too many instance attributes (8/7) (too-many-instance-attributes)
+moneypoly\player.py:3:0: W0611: Unused field imported from dataclasses (unused-import)
+************* Module property
+moneypoly\property.py:134:0: C0305: Trailing newlines (trailing-newlines)
+
+------------------------------------------------------------------
+Your code has been rated at 9.10/10 (previous run: 9.03/10, +0.06)
+

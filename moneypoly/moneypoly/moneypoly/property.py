@@ -1,17 +1,31 @@
 """Property tiles and colour groups used on the MoneyPoly board."""
 
+from dataclasses import dataclass
+
+
+@dataclass
+class PropertyConfig:
+    """Immutable configuration used when creating a Property."""
+
+    name: str
+    position: int
+    price: int
+    base_rent: int
+
 
 class Property:
     """Represents a single purchasable property tile on the MoneyPoly board."""
 
     FULL_GROUP_MULTIPLIER = 2
 
-    def __init__(self, name, position, price, base_rent, group=None):
-        self.name = name
-        self.position = position
-        self.price = price
-        self.base_rent = base_rent
-        self.mortgage_value = price // 2
+    def __init__(self, config, group=None):
+        self.name = config.name
+        self.position = config.position
+        self._financials = {
+            "price": config.price,
+            "base_rent": config.base_rent,
+            "mortgage_value": config.price // 2,
+        }
         self.owner = None
         self.is_mortgaged = False
         self.houses = 0
@@ -20,6 +34,25 @@ class Property:
         self.group = group
         if group is not None and self not in group.properties:
             group.properties.append(self)
+
+    # ------- financial property accessors -------
+
+    @property
+    def price(self):
+        """Return the purchase price of this property."""
+        return self._financials["price"]
+
+    @property
+    def base_rent(self):
+        """Return the base rent for this property."""
+        return self._financials["base_rent"]
+
+    @property
+    def mortgage_value(self):
+        """Return the mortgage payout value of this property."""
+        return self._financials["mortgage_value"]
+
+    # ------- rent -------
 
     def get_rent(self):
         """
@@ -32,6 +65,8 @@ class Property:
         if self.group is not None and self.group.all_owned_by(self.owner):
             return self.base_rent * self.FULL_GROUP_MULTIPLIER
         return self.base_rent
+
+    # ------- mortgage operations -------
 
     def mortgage(self):
         """

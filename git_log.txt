@@ -1,0 +1,13 @@
+﻿f5b57e6 Error 9: Deduct jail fine from player on voluntary release
+23d701d Error 8: Fix trade to transfer cash to seller
+2a4e649 Error 7: Ensure rent is transferred to property owner
+c64d7e0 Error 6: Allow exact-balance property purchase
+8a02451 Error 5: Fix Player.net_worth to include property values
+5e313b9 Error 4: Fix Player.move pass-Go salary logic
+fe9f8eb Error 3: Fix PropertyGroup.all_owned_by full-set check
+d7f050f Error 2: Fix Bank.give_loan bank balance handling
+541a270 Error 1: Fix Bank.collect negative amounts
+96bea68 Iteration 4: Fix card formatting and game EOF
+ae0e528 Iteration 3: Pylint docs and safety fixes
+b902925 Iteration 2: Wrap long card lines for pylint
+469aa98 Iteration 1: Pylint docstrings and basic cleanup

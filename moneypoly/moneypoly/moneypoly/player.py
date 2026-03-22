@@ -1,6 +1,17 @@
 """Player model and movement logic for MoneyPoly participants."""
 
+from dataclasses import dataclass
+
 from moneypoly.config import STARTING_BALANCE, BOARD_SIZE, GO_SALARY, JAIL_POSITION
+
+
+@dataclass
+class JailState:
+    """Tracks a player's jail-related status and get-out-of-jail cards."""
+
+    in_jail: bool = False
+    turns: int = 0
+    free_cards: int = 0
 
 
 class Player:
@@ -11,11 +22,39 @@ class Player:
         self.balance = balance
         self.position = 0
         self.properties = []
-        self.in_jail = False
-        self.jail_turns = 0
-        self.get_out_of_jail_cards = 0
+        self.jail_state = JailState()
         self.is_eliminated = False
 
+    # ------- convenience jail property accessors -------
+
+    @property
+    def in_jail(self):
+        """Return True if this player is currently in jail."""
+        return self.jail_state.in_jail
+
+    @in_jail.setter
+    def in_jail(self, value):
+        self.jail_state.in_jail = value
+
+    @property
+    def jail_turns(self):
+        """Return how many turns this player has spent in jail."""
+        return self.jail_state.turns
+
+    @jail_turns.setter
+    def jail_turns(self, value):
+        self.jail_state.turns = value
+
+    @property
+    def get_out_of_jail_cards(self):
+        """Return the number of Get Out of Jail Free cards held."""
+        return self.jail_state.free_cards
+
+    @get_out_of_jail_cards.setter
+    def get_out_of_jail_cards(self, value):
+        self.jail_state.free_cards = value
+
+    # ------- money helpers -------
 
     def add_money(self, amount):
         """Add funds to this player's balance. Amount must be non-negative."""
@@ -36,6 +75,8 @@ class Player:
     def net_worth(self):
         """Calculate and return this player's total net worth."""
         return self.balance + sum(p.price for p in self.properties)
+
+    # ------- movement -------
 
     def move(self, steps):
         """
@@ -58,6 +99,7 @@ class Player:
         self.in_jail = True
         self.jail_turns = 0
 
+    # ------- property management -------
 
     def add_property(self, prop):
         """Add a property tile to this player's holdings."""
@@ -73,6 +115,7 @@ class Player:
         """Return the number of properties this player currently owns."""
         return len(self.properties)
 
+    # ------- display -------
 
     def status_line(self):
         """Return a concise one-line status string for this player."""
