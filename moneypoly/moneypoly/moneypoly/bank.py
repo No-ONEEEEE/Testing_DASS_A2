@@ -1,10 +1,10 @@
-"""Bank entity responsible for holding funds, taxes, and emergency loans."""
+"""Bank entity that tracks cash reserves, collections, and emergency loans."""
 
 from moneypoly.config import BANK_STARTING_FUNDS
 
 
 class Bank:
-    """Tracks the bank's cash reserves and any loans issued to players."""
+    """Represents the central bank handling money flows in the game."""
     def __init__(self):
         self._funds = BANK_STARTING_FUNDS
         self._loans_issued = []

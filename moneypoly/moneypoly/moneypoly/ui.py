@@ -1,4 +1,4 @@
-"""Formatted console output helpers for displaying MoneyPoly state to users."""
+"""Console UI helpers for displaying MoneyPoly game state and prompts."""
 
 
 def print_banner(title):
